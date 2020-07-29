@@ -1,0 +1,918 @@
+[
+    [
+        7241,
+        "Frank Gore"
+    ],
+    [
+        8261,
+        "Adrian Peterson"
+    ],
+    [
+        24760,
+        "James Develin"
+    ],
+    [
+        24815,
+        "Mark Ingram II"
+    ],
+    [
+        24912,
+        "Taiwan Jones"
+    ],
+    [
+        24923,
+        "Anthony Sherman"
+    ],
+    [
+        24936,
+        "Dion Lewis"
+    ],
+    [
+        25158,
+        "Patrick DiMarco"
+    ],
+    [
+        25295,
+        "Nick Bellore"
+    ],
+    [
+        26389,
+        "Brandon Bolden"
+    ],
+    [
+        26535,
+        "Jamize Olawale"
+    ],
+    [
+        26660,
+        "Giovani Bernard"
+    ],
+    [
+        26671,
+        "Le'Veon Bell"
+    ],
+    [
+        26753,
+        "Kyle Juszczyk"
+    ],
+    [
+        26777,
+        "Chris Thompson"
+    ],
+    [
+        26804,
+        "Latavius Murray"
+    ],
+    [
+        26813,
+        "Rex Burkhead"
+    ],
+    [
+        27585,
+        "Carlos Hyde"
+    ],
+    [
+        27624,
+        "Jerick McKinnon"
+    ],
+    [
+        27631,
+        "Devonta Freeman"
+    ],
+    [
+        27658,
+        "James White"
+    ],
+    [
+        28068,
+        "Roosevelt Nix"
+    ],
+    [
+        28115,
+        "Damien Williams"
+    ],
+    [
+        28141,
+        "Keith Smith"
+    ],
+    [
+        28223,
+        "Senorise Perry"
+    ],
+    [
+        28398,
+        "Todd Gurley II"
+    ],
+    [
+        28403,
+        "Melvin Gordon III"
+    ],
+    [
+        28424,
+        "T.J. Yeldon"
+    ],
+    [
+        28442,
+        "Ameer Abdullah"
+    ],
+    [
+        28461,
+        "Tevin Coleman"
+    ],
+    [
+        28465,
+        "Duke Johnson"
+    ],
+    [
+        28474,
+        "David Johnson"
+    ],
+    [
+        28482,
+        "Ty Montgomery"
+    ],
+    [
+        28514,
+        "Mike Davis"
+    ],
+    [
+        28556,
+        "Michael Burton"
+    ],
+    [
+        28654,
+        "Raheem Mostert"
+    ],
+    [
+        28718,
+        "Rod Smith"
+    ],
+    [
+        28990,
+        "Malcolm Brown"
+    ],
+    [
+        29238,
+        "Ezekiel Elliott"
+    ],
+    [
+        29279,
+        "Derrick Henry"
+    ],
+    [
+        29307,
+        "Kenyan Drake"
+    ],
+    [
+        29353,
+        "Tyler Ervin"
+    ],
+    [
+        29368,
+        "Kenneth Dixon"
+    ],
+    [
+        29370,
+        "Devontae Booker"
+    ],
+    [
+        29377,
+        "DeAndre Washington"
+    ],
+    [
+        29384,
+        "Jordan Howard"
+    ],
+    [
+        29410,
+        "Andy Janovich"
+    ],
+    [
+        29431,
+        "Danny Vitale"
+    ],
+    [
+        29432,
+        "Derek Watt"
+    ],
+    [
+        29450,
+        "Darius Jackson"
+    ],
+    [
+        29470,
+        "Dwayne Washington"
+    ],
+    [
+        29560,
+        "Peyton Barber"
+    ],
+    [
+        29599,
+        "Josh Ferguson"
+    ],
+    [
+        29616,
+        "Bralon Addison"
+    ],
+    [
+        29650,
+        "J.D. McKissic"
+    ],
+    [
+        29872,
+        "D.J. Foster"
+    ],
+    [
+        29906,
+        "Elijhaa Penny"
+    ],
+    [
+        29951,
+        "C.J. Ham"
+    ],
+    [
+        30000,
+        "Jalen Richard"
+    ],
+    [
+        30117,
+        "Leonard Fournette"
+    ],
+    [
+        30121,
+        "Christian McCaffrey"
+    ],
+    [
+        30154,
+        "Dalvin Cook"
+    ],
+    [
+        30161,
+        "Joe Mixon"
+    ],
+    [
+        30180,
+        "Alvin Kamara"
+    ],
+    [
+        30199,
+        "Kareem Hunt"
+    ],
+    [
+        30218,
+        "James Conner"
+    ],
+    [
+        30227,
+        "Samaje Perine"
+    ],
+    [
+        30232,
+        "Tarik Cohen"
+    ],
+    [
+        30247,
+        "Jamaal Williams"
+    ],
+    [
+        30253,
+        "Wayne Gallman Jr."
+    ],
+    [
+        30256,
+        "Marlon Mack"
+    ],
+    [
+        30269,
+        "Brian Hill"
+    ],
+    [
+        30292,
+        "T.J. Logan"
+    ],
+    [
+        30295,
+        "Aaron Jones"
+    ],
+    [
+        30301,
+        "Elijah McGuire"
+    ],
+    [
+        30305,
+        "Alex Armah"
+    ],
+    [
+        30355,
+        "Khalfani Muhammad"
+    ],
+    [
+        30362,
+        "Chris Carson"
+    ],
+    [
+        30423,
+        "Austin Ekeler"
+    ],
+    [
+        30516,
+        "Taquan Mizzell Sr."
+    ],
+    [
+        30517,
+        "Ricky Ortiz"
+    ],
+    [
+        30552,
+        "Matt Breida"
+    ],
+    [
+        30592,
+        "Patrick Ricard"
+    ],
+    [
+        30696,
+        "William Stanback"
+    ],
+    [
+        30707,
+        "Corey Clement"
+    ],
+    [
+        30850,
+        "Trey Edmunds"
+    ],
+    [
+        30860,
+        "Dare Ogunbowale"
+    ],
+    [
+        30972,
+        "Saquon Barkley"
+    ],
+    [
+        30997,
+        "Rashaad Penny"
+    ],
+    [
+        31001,
+        "Sony Michel"
+    ],
+    [
+        31005,
+        "Nick Chubb"
+    ],
+    [
+        31008,
+        "Ronald Jones II"
+    ],
+    [
+        31013,
+        "Kerryon Johnson"
+    ],
+    [
+        31029,
+        "Derrius Guice"
+    ],
+    [
+        31041,
+        "Royce Freeman"
+    ],
+    [
+        31074,
+        "Nyheim Hines"
+    ],
+    [
+        31096,
+        "Ito Smith"
+    ],
+    [
+        31100,
+        "Kalen Ballage"
+    ],
+    [
+        31104,
+        "Chase Edmonds"
+    ],
+    [
+        31135,
+        "Jaylen Samuels"
+    ],
+    [
+        31139,
+        "Jordan Wilkins"
+    ],
+    [
+        31145,
+        "John Kelly"
+    ],
+    [
+        31171,
+        "Boston Scott"
+    ],
+    [
+        31174,
+        "Trenton Cannon"
+    ],
+    [
+        31206,
+        "Bo Scarbrough"
+    ],
+    [
+        31207,
+        "Nick Bawden"
+    ],
+    [
+        31221,
+        "Justin Jackson"
+    ],
+    [
+        31228,
+        "Mike Boone"
+    ],
+    [
+        31278,
+        "Shaun Wilson"
+    ],
+    [
+        31280,
+        "Jordan Chunn"
+    ],
+    [
+        31302,
+        "Reggie Bonnafon"
+    ],
+    [
+        31379,
+        "Phillip Lindsay"
+    ],
+    [
+        31394,
+        "Jeff Wilson Jr."
+    ],
+    [
+        31407,
+        "Elijah Wellman"
+    ],
+    [
+        31424,
+        "Gus Edwards"
+    ],
+    [
+        31457,
+        "Dontrell Hilliard"
+    ],
+    [
+        31500,
+        "Darrel Williams"
+    ],
+    [
+        31510,
+        "Johnny Stanton"
+    ],
+    [
+        31537,
+        "Buddy Howell"
+    ],
+    [
+        31567,
+        "Josh Adams"
+    ],
+    [
+        31620,
+        "Dalyn Dawkins"
+    ],
+    [
+        31653,
+        "Ralph Webb"
+    ],
+    [
+        31662,
+        "Ryan Nall"
+    ],
+    [
+        31822,
+        "Christian Wade"
+    ],
+    [
+        31826,
+        "Jakob Johnson"
+    ],
+    [
+        31856,
+        "Josh Jacobs"
+    ],
+    [
+        31885,
+        "Miles Sanders"
+    ],
+    [
+        31902,
+        "Darrell Henderson Jr."
+    ],
+    [
+        31905,
+        "David Montgomery"
+    ],
+    [
+        31906,
+        "Devin Singletary"
+    ],
+    [
+        31919,
+        "Damien Harris"
+    ],
+    [
+        31934,
+        "Alexander Mattison"
+    ],
+    [
+        31944,
+        "Bryce Love"
+    ],
+    [
+        31945,
+        "Justice Hill"
+    ],
+    [
+        31954,
+        "Benny Snell Jr."
+    ],
+    [
+        31960,
+        "Tony Pollard"
+    ],
+    [
+        31972,
+        "Ryquell Armstead"
+    ],
+    [
+        31984,
+        "Qadree Ollison"
+    ],
+    [
+        31986,
+        "Jordan Scarlett"
+    ],
+    [
+        32014,
+        "Trayveon Williams"
+    ],
+    [
+        32018,
+        "Ty Johnson"
+    ],
+    [
+        32026,
+        "Dexter Williams"
+    ],
+    [
+        32036,
+        "Travis Homer"
+    ],
+    [
+        32043,
+        "Rodney Anderson"
+    ],
+    [
+        32046,
+        "Darwin Thompson"
+    ],
+    [
+        32052,
+        "Cullen Gillaspia"
+    ],
+    [
+        32054,
+        "Kerrith Whyte Jr."
+    ],
+    [
+        32065,
+        "Chandler Cox"
+    ],
+    [
+        32066,
+        "Myles Gaskin"
+    ],
+    [
+        32140,
+        "Khari Blasingame"
+    ],
+    [
+        32148,
+        "Elijah Holyfield"
+    ],
+    [
+        32216,
+        "George Aston"
+    ],
+    [
+        32238,
+        "Jon Hilliman"
+    ],
+    [
+        32344,
+        "Alec Ingold"
+    ],
+    [
+        32390,
+        "Devine Ozigbo"
+    ],
+    [
+        32439,
+        "Patrick Laird"
+    ],
+    [
+        32473,
+        "Wes Hills"
+    ],
+    [
+        32475,
+        "Bruce Anderson III"
+    ],
+    [
+        32502,
+        "Damarea Crockett"
+    ],
+    [
+        32508,
+        "Karan Higdon Jr."
+    ],
+    [
+        32541,
+        "Jeremy Cox"
+    ],
+    [
+        32559,
+        "Tony Brooks-James"
+    ],
+    [
+        32596,
+        "Craig Reynolds"
+    ],
+    [
+        32608,
+        "D'Ernest Johnson"
+    ],
+    [
+        32629,
+        "Aca'Cedric Ware"
+    ],
+    [
+        32630,
+        "Derrick Gore"
+    ],
+    [
+        32669,
+        "Jacques Patrick"
+    ],
+    [
+        32702,
+        "Clyde Edwards-Helaire"
+    ],
+    [
+        32705,
+        "D'Andre Swift"
+    ],
+    [
+        32711,
+        "Jonathan Taylor"
+    ],
+    [
+        32722,
+        "Cam Akers"
+    ],
+    [
+        32725,
+        "J.K. Dobbins"
+    ],
+    [
+        32732,
+        "AJ Dillon"
+    ],
+    [
+        32736,
+        "Antonio Gibson"
+    ],
+    [
+        32746,
+        "Ke'Shawn Vaughn"
+    ],
+    [
+        32750,
+        "Lynn Bowden Jr."
+    ],
+    [
+        32756,
+        "Zack Moss"
+    ],
+    [
+        32763,
+        "Darrynton Evans"
+    ],
+    [
+        32782,
+        "Joshua Kelley"
+    ],
+    [
+        32790,
+        "La'Mical Perine"
+    ],
+    [
+        32794,
+        "Anthony McFarland Jr."
+    ],
+    [
+        32814,
+        "DeeJay Dallas"
+    ],
+    [
+        32842,
+        "Jason Huntley"
+    ],
+    [
+        32892,
+        "Eno Benjamin"
+    ],
+    [
+        32915,
+        "Raymond Calais"
+    ],
+    [
+        32916,
+        "Malcolm Perry"
+    ],
+    [
+        32926,
+        "LeVante Bellamy"
+    ],
+    [
+        32940,
+        "Spencer Nigh"
+    ],
+    [
+        32966,
+        "Adrian Killins Jr."
+    ],
+    [
+        32972,
+        "Michael Warren II"
+    ],
+    [
+        32975,
+        "Darius Bradwell"
+    ],
+    [
+        32984,
+        "Bobby Holly"
+    ],
+    [
+        32987,
+        "Gabe Nabers"
+    ],
+    [
+        33003,
+        "Bronson Rechsteiner"
+    ],
+    [
+        33006,
+        "Ty'Son Williams"
+    ],
+    [
+        33028,
+        "J.J. Taylor"
+    ],
+    [
+        33037,
+        "Javon Leake"
+    ],
+    [
+        33048,
+        "Mikey Daniel"
+    ],
+    [
+        33079,
+        "Sirgeo Hoffman"
+    ],
+    [
+        33088,
+        "Jonathan Ward"
+    ],
+    [
+        33098,
+        "Darius Anderson"
+    ],
+    [
+        33099,
+        "Sewo Olonilua"
+    ],
+    [
+        33100,
+        "Rico Dowdle"
+    ],
+    [
+        33114,
+        "Tony Jones Jr."
+    ],
+    [
+        33123,
+        "Nathan Cottrell"
+    ],
+    [
+        33126,
+        "Tavien Feaster"
+    ],
+    [
+        33138,
+        "James Robinson"
+    ],
+    [
+        33143,
+        "Connor Slomka"
+    ],
+    [
+        33153,
+        "Rodney Smith"
+    ],
+    [
+        33161,
+        "Scottie Phillips"
+    ],
+    [
+        33170,
+        "Devwah Whaley"
+    ],
+    [
+        33177,
+        "Napoleon Maxwell"
+    ],
+    [
+        33179,
+        "Artavis Pierce"
+    ],
+    [
+        33188,
+        "Sandro Platzgummer"
+    ],
+    [
+        33191,
+        "Luke Sellers"
+    ],
+    [
+        33199,
+        "JaMycal Hasty"
+    ],
+    [
+        33200,
+        "Josh Hokit"
+    ],
+    [
+        33228,
+        "Jordan Jones"
+    ],
+    [
+        33235,
+        "Patrick Taylor Jr."
+    ],
+    [
+        33251,
+        "James Gilbert"
+    ],
+    [
+        33265,
+        "Salvon Ahmed"
+    ],
+    [
+        33281,
+        "Patrick Carr"
+    ],
+    [
+        33284,
+        "Anthony Jones"
+    ],
+    [
+        33297,
+        "Xavier Jones"
+    ],
+    [
+        33307,
+        "Brian Herrien"
+    ],
+    [
+        33309,
+        "Ben LeMay"
+    ],
+    [
+        33345,
+        "Cameron Scarlett"
+    ],
+    [
+        33357,
+        "Reggie Gilliam"
+    ],
+    [
+        33359,
+        "Antonio Williams"
+    ]
+]

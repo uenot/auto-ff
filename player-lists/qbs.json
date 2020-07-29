@@ -1,0 +1,506 @@
+[
+    [
+        5228,
+        "Tom Brady"
+    ],
+    [
+        5479,
+        "Drew Brees"
+    ],
+    [
+        6763,
+        "Philip Rivers"
+    ],
+    [
+        6770,
+        "Ben Roethlisberger"
+    ],
+    [
+        6849,
+        "Matt Schaub"
+    ],
+    [
+        7177,
+        "Alex Smith"
+    ],
+    [
+        7200,
+        "Aaron Rodgers"
+    ],
+    [
+        7426,
+        "Ryan Fitzpatrick"
+    ],
+    [
+        8544,
+        "Matt Moore"
+    ],
+    [
+        8780,
+        "Matt Ryan"
+    ],
+    [
+        8795,
+        "Joe Flacco"
+    ],
+    [
+        8834,
+        "Chad Henne"
+    ],
+    [
+        9265,
+        "Matthew Stafford"
+    ],
+    [
+        9547,
+        "Brian Hoyer"
+    ],
+    [
+        9678,
+        "Chase Daniel"
+    ],
+    [
+        24060,
+        "Colt McCoy"
+    ],
+    [
+        24788,
+        "Cam Newton"
+    ],
+    [
+        24797,
+        "Blaine Gabbert"
+    ],
+    [
+        24822,
+        "Andy Dalton"
+    ],
+    [
+        24967,
+        "Tyrod Taylor"
+    ],
+    [
+        25712,
+        "Robert Griffin III"
+    ],
+    [
+        25718,
+        "Ryan Tannehill"
+    ],
+    [
+        25785,
+        "Russell Wilson"
+    ],
+    [
+        25798,
+        "Nick Foles"
+    ],
+    [
+        25812,
+        "Kirk Cousins"
+    ],
+    [
+        26483,
+        "Case Keenum"
+    ],
+    [
+        26547,
+        "Alex Tanney"
+    ],
+    [
+        26662,
+        "Geno Smith"
+    ],
+    [
+        26696,
+        "Mike Glennon"
+    ],
+    [
+        26721,
+        "Matt Barkley"
+    ],
+    [
+        26949,
+        "Ryan Griffin"
+    ],
+    [
+        27170,
+        "Tyler Bray"
+    ],
+    [
+        27560,
+        "Teddy Bridgewater"
+    ],
+    [
+        27564,
+        "Derek Carr"
+    ],
+    [
+        27590,
+        "Jimmy Garoppolo"
+    ],
+    [
+        27692,
+        "AJ McCarron"
+    ],
+    [
+        27711,
+        "David Fales"
+    ],
+    [
+        27742,
+        "Garrett Gilbert"
+    ],
+    [
+        28389,
+        "Jameis Winston"
+    ],
+    [
+        28390,
+        "Marcus Mariota"
+    ],
+    [
+        28477,
+        "Sean Mannion"
+    ],
+    [
+        28535,
+        "Brett Hundley"
+    ],
+    [
+        29235,
+        "Jared Goff"
+    ],
+    [
+        29236,
+        "Carson Wentz"
+    ],
+    [
+        29260,
+        "Paxton Lynch"
+    ],
+    [
+        29325,
+        "Jacoby Brissett"
+    ],
+    [
+        29327,
+        "Cody Kessler"
+    ],
+    [
+        29369,
+        "Dak Prescott"
+    ],
+    [
+        29421,
+        "Nate Sudfeld"
+    ],
+    [
+        29425,
+        "Jake Rudock"
+    ],
+    [
+        29441,
+        "Jeff Driskel"
+    ],
+    [
+        30115,
+        "Mitchell Trubisky"
+    ],
+    [
+        30123,
+        "Patrick Mahomes"
+    ],
+    [
+        30125,
+        "Deshaun Watson"
+    ],
+    [
+        30200,
+        "Davis Webb"
+    ],
+    [
+        30217,
+        "C.J. Beathard"
+    ],
+    [
+        30248,
+        "Josh Dobbs"
+    ],
+    [
+        30284,
+        "Nathan Peterman"
+    ],
+    [
+        30366,
+        "Chad Kelly"
+    ],
+    [
+        30538,
+        "P.J. Walker"
+    ],
+    [
+        30563,
+        "Nick Mullens"
+    ],
+    [
+        30614,
+        "Taysom Hill"
+    ],
+    [
+        30788,
+        "Cooper Rush"
+    ],
+    [
+        30822,
+        "Kyle Sloter"
+    ],
+    [
+        30971,
+        "Baker Mayfield"
+    ],
+    [
+        30973,
+        "Sam Darnold"
+    ],
+    [
+        30977,
+        "Josh Allen"
+    ],
+    [
+        30980,
+        "Josh Rosen"
+    ],
+    [
+        31002,
+        "Lamar Jackson"
+    ],
+    [
+        31046,
+        "Mason Rudolph"
+    ],
+    [
+        31078,
+        "Kyle Lauletta"
+    ],
+    [
+        31141,
+        "Mike White"
+    ],
+    [
+        31189,
+        "Danny Etling"
+    ],
+    [
+        31190,
+        "Alex McGough"
+    ],
+    [
+        31219,
+        "Logan Woodside"
+    ],
+    [
+        31301,
+        "Kyle Allen"
+    ],
+    [
+        31336,
+        "Kurt Benkert"
+    ],
+    [
+        31365,
+        "J.T. Barrett"
+    ],
+    [
+        31431,
+        "Tim Boyle"
+    ],
+    [
+        31803,
+        "John Wolford"
+    ],
+    [
+        31833,
+        "Kyler Murray"
+    ],
+    [
+        31838,
+        "Daniel Jones"
+    ],
+    [
+        31847,
+        "Dwayne Haskins Jr."
+    ],
+    [
+        31874,
+        "Drew Lock"
+    ],
+    [
+        31932,
+        "Will Grier"
+    ],
+    [
+        31936,
+        "Ryan Finley"
+    ],
+    [
+        31965,
+        "Jarrett Stidham"
+    ],
+    [
+        31998,
+        "Easton Stick"
+    ],
+    [
+        31999,
+        "Clayton Thorson"
+    ],
+    [
+        32010,
+        "Gardner Minshew II"
+    ],
+    [
+        32029,
+        "Trace McSorley"
+    ],
+    [
+        32138,
+        "Jake Browning"
+    ],
+    [
+        32152,
+        "Drew Anderson"
+    ],
+    [
+        32221,
+        "Brett Rypien"
+    ],
+    [
+        32272,
+        "David Blough"
+    ],
+    [
+        32464,
+        "Jake Dolegala"
+    ],
+    [
+        32581,
+        "Devlin Hodges"
+    ],
+    [
+        32642,
+        "Jordan Ta'amu"
+    ],
+    [
+        32662,
+        "Chris Streveler"
+    ],
+    [
+        32671,
+        "Joe Burrow"
+    ],
+    [
+        32675,
+        "Tua Tagovailoa"
+    ],
+    [
+        32676,
+        "Justin Herbert"
+    ],
+    [
+        32696,
+        "Jordan Love"
+    ],
+    [
+        32723,
+        "Jalen Hurts"
+    ],
+    [
+        32792,
+        "Jacob Eason"
+    ],
+    [
+        32795,
+        "James Morgan"
+    ],
+    [
+        32837,
+        "Jake Fromm"
+    ],
+    [
+        32859,
+        "Jake Luton"
+    ],
+    [
+        32894,
+        "Cole McDonald"
+    ],
+    [
+        32901,
+        "Ben DiNucci"
+    ],
+    [
+        32910,
+        "Tommy Stevens"
+    ],
+    [
+        32914,
+        "Nate Stanley"
+    ],
+    [
+        32928,
+        "Riley Neal"
+    ],
+    [
+        32993,
+        "Tyler Huntley"
+    ],
+    [
+        33015,
+        "Brian Lewerke"
+    ],
+    [
+        33016,
+        "J'mar Smith"
+    ],
+    [
+        33036,
+        "Case Cookus"
+    ],
+    [
+        33167,
+        "Nick Tiano"
+    ],
+    [
+        33202,
+        "Broc Rutter"
+    ],
+    [
+        33207,
+        "Steven Montez"
+    ],
+    [
+        33229,
+        "Jalen Morton"
+    ],
+    [
+        33256,
+        "Josh Love"
+    ],
+    [
+        33258,
+        "Bryce Perkins"
+    ],
+    [
+        33266,
+        "Anthony Gordon"
+    ],
+    [
+        33279,
+        "Reid Sinnett"
+    ],
+    [
+        33304,
+        "Kevin Davidson"
+    ]
+]
