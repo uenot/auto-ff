@@ -92,7 +92,8 @@ class TraderBot:
                         message_box.send_keys(message)
                     except NoSuchElementException:
                         pass
-                print(sorted(players))
+                if log:
+                    print(sorted(players))
                 cancel_button.click()
                 # redirects to my team page after cancel automatically
             else:
