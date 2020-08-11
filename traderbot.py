@@ -21,8 +21,7 @@ class TraderBot:
             chrome_options.add_argument('--window-size=1920x1080')
             chrome_options.add_argument('--remote-debugging-port=9222')
         # initialize driver
-        self.driver = webdriver.Chrome(chrome_options=chrome_options,
-                                       executable_path=os.path.join(os.getcwd(), 'chromedriver'))
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.league_id = league_id
         self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
         if headless:
