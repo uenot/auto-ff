@@ -39,19 +39,21 @@ class TraderBot:
             # if not headless, should login through window
             input('confirm login')
 
-    def cancel_trades(self, target_players=None, message='', log=False):
+    def cancel_trades(self, target_players=None, method=None, message='', log=False):
         """
         Cancels some or all active trades.
 
         :param target_players: List of player IDs. Any trade with only these players will be canceled.
         If not specified, cancels all trades.
         :type target_players: list(str)
+        :param method:
         :param message: A message to send upon rejecting a trade. Applies only to trades received; not to those sent.
         :type message: str
         """
-        self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
         i = 1
         while True:
+            if self.driver.current_url != f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3':
+                self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
             try:
                 team_notes = WebDriverWait(self.driver, 4).until(
                     EC.presence_of_element_located((By.XPATH, f'//*[@id="teamnotes"]/div/div[{i}]'))
@@ -69,9 +71,21 @@ class TraderBot:
                     EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
                 )
             except TimeoutException:
+                i += 1
                 continue
 
             soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+
+            # test if trade was sent or received
+            if method == 'Reject' and len(soup.find_all('a', text='Reject Trade')) >= 1:
+                pass
+            elif method == 'Cancel' and len(soup.find_all('a', text='Reject Trade')) >= 1:
+                pass
+            elif method is None:
+                pass
+            else:
+                i += 1
+                continue
 
             # find player ids involved in trade via anchor source links
             players = []
@@ -97,8 +111,6 @@ class TraderBot:
                 cancel_button.click()
                 # redirects to my team page after cancel automatically
             else:
-                # executes javascript to simulate browser "back" button
-                self.driver.execute_script('window.history.go(-1)')
                 # does not increment if trade deleted: would skip a teamnote
                 i += 1
 
@@ -178,3 +190,6 @@ class TraderBot:
             time.sleep(interval)
             for target in targets:
                 self.cancel_trades(target_players=target[1])
+
+    def shutdown(self):
+        self.driver.quit()
