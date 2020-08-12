@@ -24,6 +24,7 @@ class TraderBot:
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.league_id = league_id
         self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
+
         if headless:
             # have to login through command prompt if headless
             username_field = WebDriverWait(self.driver, 10).until(
@@ -45,10 +46,9 @@ class TraderBot:
 
         :param target_players: List of player IDs. Any trade with only these players will be canceled.
         If not specified, cancels all trades.
-        :type target_players: list(str)
-        :param method:
+        :param method: Specify whether to cancel sent trades, reject received trades, or both.
         :param message: A message to send upon rejecting a trade. Applies only to trades received; not to those sent.
-        :type message: str
+        :param log: Specify whether to print cancelled trades to the console or not.
         """
         i = 1
         while True:
@@ -114,16 +114,18 @@ class TraderBot:
                 # does not increment if trade deleted: would skip a teamnote
                 i += 1
 
-    def permacancel(self, interval):
+    def permacancel(self, interval, method=None):
         """
         Runs cancel_trades within a while loop.
 
         :param interval: The number of seconds between cancels.
+        :param method: Specify whether to cancel sent trades, reject received trades, or both.
         """
         i = 0
         while True:
             i += 1
-            self.cancel_trades(message=f'Cancellation round {i}, Time cancelled: {datetime.now()}', log=True)
+            self.cancel_trades(method=method, message=f'Cancellation round {i}, Time cancelled: {datetime.now()}',
+                               log=True)
             time.sleep(interval)
 
     def submit_trade(self, other_team, players, message=''):
@@ -131,11 +133,8 @@ class TraderBot:
         Submits a trade.
         
         :param other_team: ID of the team to trade with.
-        :type other_team: str
         :param players: List of players to trade (on both teams; order doesn't matter)
-        :type players: list(str)
         :param message: Custom message to send along with the trade.
-        :type message: str
         """
         # navigate to page of target team, start trade creation
         self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/{other_team}')
@@ -177,9 +176,7 @@ class TraderBot:
         :param targets: List of tuples, each containing the target team ID and a list of target player IDs.
         Example: [('1', ['27581', '30259', '25802']), ('6', ['25802', '31056', '31268'])]
         :param n: The number of times to send the specified trades.
-        :type n: int
         :param interval: The number of seconds to wait between sending (and cancelling) trades.
-        :type n: int
         """
         for i in range(n):
             # sends custom message with number and time sent
