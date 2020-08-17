@@ -79,7 +79,7 @@ class TraderBot:
             # test if trade was sent or received
             if method == 'Reject' and len(soup.find_all('a', text='Reject Trade')) >= 1:
                 pass
-            elif method == 'Cancel' and len(soup.find_all('a', text='Reject Trade')) >= 1:
+            elif method == 'Cancel' and len(soup.find_all('a', text='Cancel Trade')) >= 1:
                 pass
             elif method is None:
                 pass
