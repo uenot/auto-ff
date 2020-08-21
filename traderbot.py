@@ -6,10 +6,73 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import time
-import os
 from bs4 import BeautifulSoup
 from datetime import datetime
 from getpass import getpass
+import requests
+
+
+def id_to_name(player_id):
+    soup = BeautifulSoup(requests.get(f'https://sports.yahoo.com/nfl/players/{player_id}/').text, 'html.parser')
+    return soup.find('span', class_='ys-name').text
+
+
+def get_players_from_page(driver):
+    players = []
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    anchors = soup.find_all('a', href=True)
+    for anchor in anchors:
+        if 'https://sports.yahoo.com/nfl/players/' in anchor['href'] and 'news' not in anchor['href']:
+            players.append(anchor['href'].split('/')[-1])
+    return players
+
+
+class Trade:
+    def __init__(self, url, driver):
+        self.url = url
+        self.league_id = self.url.split('/')[-3]
+        self.driver = driver
+
+    def is_active(self):
+        self.driver.get(self.url)
+        # test if page is loaded: evaluate btn exists in sent and received trades
+        try:
+            WebDriverWait(self.driver, 3).until(
+                EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def get_players(self):
+        my_players = []
+        other_players = []
+        if self.is_active():
+            all_players = get_players_from_page(self.driver)
+            self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
+            my_team = get_players_from_page(self.driver)
+            for player in all_players:
+                if player in my_team:
+                    my_players.append(player)
+                else:
+                    other_players.append(player)
+        return my_players, other_players
+
+    def was_received(self):
+        if self.is_active():
+            try:
+                reject_btn = self.driver.find_element_by_link_text('Reject Trade')
+                return True
+            except NoSuchElementException:
+                return False
+
+    def cancel(self):
+        if self.is_active():
+            if self.was_received():
+                cancel_btn = self.driver.find_element_by_link_text('Reject Trade')
+            else:
+                cancel_btn = self.driver.find_element_by_link_text('Cancel Trade')
+            cancel_btn.click()
 
 
 class TraderBot:
@@ -40,22 +103,14 @@ class TraderBot:
             # if not headless, should login through window
             input('confirm login')
 
-    def cancel_trades(self, target_players=None, method=None, message='', log=False):
-        """
-        Cancels some or all active trades.
-
-        :param target_players: List of player IDs. Any trade with only these players will be canceled.
-        If not specified, cancels all trades.
-        :param method: Specify whether to cancel sent trades, reject received trades, or both.
-        :param message: A message to send upon rejecting a trade. Applies only to trades received; not to those sent.
-        :param log: Specify whether to print cancelled trades to the console or not.
-        """
+    def get_trades(self):
+        trades = []
         i = 1
         while True:
             if self.driver.current_url != f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3':
                 self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/3')
             try:
-                team_notes = WebDriverWait(self.driver, 4).until(
+                team_notes = WebDriverWait(self.driver, 3).until(
                     EC.presence_of_element_located((By.XPATH, f'//*[@id="teamnotes"]/div/div[{i}]'))
                 )
             except TimeoutException:
@@ -70,49 +125,32 @@ class TraderBot:
                 WebDriverWait(self.driver, 4).until(
                     EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
                 )
+                trades.append(Trade(self.driver.current_url, self.driver))
+                i += 1
             except TimeoutException:
                 i += 1
                 continue
+        return trades
 
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+    def cancel_trades(self, target_players=None, log=False):
+        """
+        Cancels some or all active trades.
 
-            # test if trade was sent or received
-            if method == 'Reject' and len(soup.find_all('a', text='Reject Trade')) >= 1:
-                pass
-            elif method == 'Cancel' and len(soup.find_all('a', text='Reject Trade')) >= 1:
-                pass
-            elif method is None:
-                pass
-            else:
-                i += 1
-                continue
+        :param target_players: List of player IDs. Any trade with only these players will be canceled.
+        If not specified, cancels all trades.
+        :param method: Specify whether to cancel sent trades, reject received trades, or both.
+        :param message: A message to send upon rejecting a trade. Applies only to trades received; not to those sent.
+        :param log: Specify whether to print cancelled trades to the console or not.
+        """
 
-            # find player ids involved in trade via anchor source links
-            players = []
-            anchors = soup.find_all('a', href=True)
-            for anchor in anchors:
-                if 'https://sports.yahoo.com/nfl/players/' in anchor['href'] and 'news' not in anchor['href']:
-                    players.append(anchor['href'].split('/')[-1])
-
-            # test if found players matches specified (or no specification)
-            if target_players is None or sorted(players) == sorted(target_players):
-                # different text based on if trade was sent or received
-                try:
-                    cancel_button = self.driver.find_element_by_link_text('Cancel Trade')
-                except NoSuchElementException:
-                    cancel_button = self.driver.find_element_by_link_text('Reject Trade')
-                    try:
-                        message_box = self.driver.find_element_by_id('tradenote')
-                        message_box.send_keys(message)
-                    except NoSuchElementException:
-                        pass
+        for trade in self.get_trades():
+            my_players, other_players = trade.get_players()
+            if target_players is None or sorted(target_players) == sorted(my_players + other_players):
                 if log:
-                    print(sorted(players))
-                cancel_button.click()
-                # redirects to my team page after cancel automatically
-            else:
-                # does not increment if trade deleted: would skip a teamnote
-                i += 1
+                    log_str = f'{", ".join([id_to_name(player) for player in my_players])} for '
+                    log_str += f'{", ".join([id_to_name(player) for player in other_players])}'
+                    print(log_str)
+                trade.cancel()
 
     def permacancel(self, interval, method=None):
         """
@@ -124,8 +162,7 @@ class TraderBot:
         i = 0
         while True:
             i += 1
-            self.cancel_trades(method=method, message=f'Cancellation round {i}, Time cancelled: {datetime.now()}',
-                               log=True)
+            self.cancel_trades(log=True)
             time.sleep(interval)
 
     def submit_trade(self, other_team, players, message=''):
