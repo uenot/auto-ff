@@ -13,6 +13,7 @@ from getpass import getpass
 import requests
 from game import *
 
+# TODO: add empty junktrades folder to github; set up gitignore
 
 def id_to_name(player_id):
     soup = BeautifulSoup(requests.get(f'https://sports.yahoo.com/nfl/players/{player_id}/').text, 'html.parser')
@@ -333,7 +334,21 @@ class TraderBot:
                 except NoSuchElementException:
                     # will occur for kickers/defenses
                     break
-                player_list.append((player, float(player_proj_pts.text)))
+                player_proj_pts = float(player_proj_pts.text)
+
+                # adjust qb points down to prioritize other positions
+                position_xpath = f'//*[@id="statTable0"]/tbody/tr[{j}]/td[2]/div/div/div/span'
+                try:
+                    player_position = self.driver.find_element_by_xpath(position_xpath)
+                except NoSuchElementException:
+                    # shouldn't happen since break would occur above if player doesn't exist
+                    pass
+                player_position = player_position.text.split(' - ')[-1]
+
+                if player_position == 'QB':
+                    player_proj_pts -= 125
+
+                player_list.append((player, player_proj_pts))
 
             # get player w/ highest proj. pts
             trades_to_send[i] = [sorted(player_list, key=lambda x: -x[1])[0][0]]
