@@ -333,7 +333,7 @@ class TraderBot:
                 except NoSuchElementException:
                     # will occur for kickers/defenses
                     break
-                player_list.append((player, float(player_proj_pts)))
+                player_list.append((player, float(player_proj_pts.text)))
 
             # get player w/ highest proj. pts
             trades_to_send[i] = [sorted(player_list, key=lambda x: -x[1])[0][0]]
