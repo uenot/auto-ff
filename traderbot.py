@@ -1,6 +1,6 @@
 import json
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -318,7 +318,10 @@ class TraderBot:
             this_season_button = self.driver.find_element_by_xpath('//*[@id="subnav_P"]/li[4]/a')
             this_season_button.click()
 
-            # TODO: click the projected stats/ whole season (rn 2019 results)
+            # the first element takes time to switch to projected stats
+            # can't be solved with explicit wait since the xpath destination exists prior to change
+            time.sleep(2)
+
             player_list = []
             # takes advantage of the fact that get_players_from_page returns in order of appearance on page
             for j, player in enumerate(players, 1):
@@ -330,7 +333,7 @@ class TraderBot:
                 except NoSuchElementException:
                     # will occur for kickers/defenses
                     break
-                player_list.append((player, float(player_proj_pts.text)))
+                player_list.append((player, float(player_proj_pts)))
 
             # get player w/ highest proj. pts
             trades_to_send[i] = [sorted(player_list, key=lambda x: -x[1])[0][0]]
@@ -358,6 +361,8 @@ class TraderBot:
 
         with open('junktrades/trades_to_receive.json', 'w') as f:
             json.dump(trades_to_receive, f, indent=4)
+
+        self.view_junk_trades()
 
     def view_junk_trades(self):
         print('Trades to send:')
@@ -396,5 +401,5 @@ class TraderBot:
 
 if __name__ == '__main__':
     bot = TraderBot(93180, 3)
-    print(bot.team_id_to_name(4))
+    bot.generate_junk_trades()
     bot.shutdown()
