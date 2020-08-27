@@ -96,24 +96,24 @@ class Hangman(Game):
     def action(self, input_str):
         if not self.started:
             return self.start()
-        if self.check_input(input_str):
-            input_str = input_str.lower()
-            self.guess(input_str)
-            message = self.get_knowns()
-            message += f'\tGuesses left: {self.wrong_guesses_left} \t Previous guesses: {", ".join(self.guesses)}'
-            if self.check_victory():
-                message += '\n\nYou won!'
-                self.reset()
-                message += '\n\nTo play again, submit another trade.'
-            elif self.check_loss():
-                message += '\n\nYou ran out of guesses.'
-                message += f'The word was: {self.get_word()}'
-                self.reset()
-                message += '\n\nTo play again, submit another trade.'
-            else:
-                message += '\n\nTo guess, counter this trade and enter a letter in the trade note area.'
+        message = ''
+        if not self.check_input(input_str):
+            message += f'The input "{input_str}" was invalid. Type exactly one letter into the trade note box.\n\n'
+        input_str = input_str.lower()
+        self.guess(input_str)
+        message += self.get_knowns()
+        message += f'\tGuesses left: {self.wrong_guesses_left} \t Previous guesses: {", ".join(self.guesses)}'
+        if self.check_victory():
+            message += '\n\nYou won!'
+            self.reset()
+            message += '\n\nTo play again, submit another trade.'
+        elif self.check_loss():
+            message += '\n\nYou ran out of guesses.'
+            message += f'The word was: {self.get_word()}'
+            self.reset()
+            message += '\n\nTo play again, submit another trade.'
         else:
-            message = f'The input {input_str} was invalid. Type exactly one letter into the trade note box.'
+            message += '\n\nTo guess, counter this trade and enter a letter in the trade note area.'
         return message
 
     def log(self):
