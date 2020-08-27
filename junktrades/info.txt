@@ -1,0 +1,5 @@
+This directory will contain two .json files,
+"trades_to_receive.json" and "trades_to_send".json, once the method
+"generate_junk_trades" in the TraderBot class is run. These files can be
+manually edited afterwards if desired. They will be referenced in various
+automatic processes for TraderBot.

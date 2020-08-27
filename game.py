@@ -1,8 +1,21 @@
 import requests
 import random
+from abc import ABC, abstractmethod
 
 
-class Hangman:
+class Game(ABC):
+
+    @abstractmethod
+    def action(self, input_str) -> str:
+        # return
+        pass
+
+    @abstractmethod
+    def log(self) -> str:
+        pass
+
+
+class Hangman(Game):
     def __init__(self):
         words = requests.get('https://users.cs.duke.edu/~ola/ap/linuxwords').text.split()
         self.words = [word.lower().strip() for word in words if not word[0].isupper() and len(word) >= 3]
@@ -103,9 +116,11 @@ class Hangman:
             message = f'The input {input_str} was invalid. Type exactly one letter into the trade note box.'
         return message
 
+    def log(self):
+        return f'{game.get_knowns()} ({game.get_word()})'
+
 
 if __name__ == '__main__':
     game = Hangman()
     while not game.check_victory() and not game.check_loss():
         print(game.action(input()))
-

@@ -660,10 +660,6 @@ def main():
         league_index += 1
     create_df(league)
     draft_team(league, mock=True)
-    
-
-
-# In[17]:
 
 
 if __name__ == '__main__':
