@@ -402,7 +402,6 @@ class TraderBot:
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
                         print(f'{self.team_id_to_name(other_team)}: {game.get_knowns()} ({game.get_word()})')
-            time.sleep(10)
 
     def run_game(self, game, log=True):
         """
@@ -426,7 +425,6 @@ class TraderBot:
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
                         print(f'{self.team_id_to_name(other_team)}: {current_game.log()})')
-            time.sleep(10)
 
     def generate_junk_trades(self, write=True):
         """
