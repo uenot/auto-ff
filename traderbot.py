@@ -415,6 +415,9 @@ class TraderBot:
 
         games = {team: game() for team in trades_to_send.keys()}
 
+        interval = 300
+        counter = 0
+
         while True:
             for trade in self.get_trades():
                 if trade.was_received():
@@ -425,6 +428,17 @@ class TraderBot:
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
                         print(f'{self.team_id_to_name(other_team)}: {current_game.log()})')
+                    interval = 0
+                    counter = 0
+            time.sleep(interval)
+            if counter >= 15:
+                interval = 10
+            elif counter >= 60:
+                interval = 60
+            else:
+                interval = 300
+            counter += 1
+
 
     def generate_junk_trades(self, write=True):
         """
