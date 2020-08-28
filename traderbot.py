@@ -45,6 +45,7 @@ class Trade:
     """
     Represents a trade. Contains methods to fetch info about the trade and interact with the trade.
     """
+
     def __init__(self, url, team_id, driver):
         """
         Constructor for a Trade object.
@@ -181,6 +182,7 @@ class TraderBot:
     """
     Contains bindings for trade actions.
     """
+
     def __init__(self, league_id, team_id, headless=False):
         """
         Constructor for TraderBot. Also sets up the driver by allowing the user to log into Yahoo.
@@ -392,16 +394,29 @@ class TraderBot:
 
         games = {team: Hangman() for team in trades_to_send.keys()}
 
+        interval = 300
+        counter = 0
+
         while True:
             for trade in self.get_trades():
                 if trade.was_received():
                     other_team = trade.get_other_team()
-                    game = games[other_team]
+                    current_game = games[other_team]
                     response = trade.get_message()
-                    prompt = game.action(response)
+                    prompt = current_game.action(response)
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
-                        print(f'{self.team_id_to_name(other_team)}: {game.get_knowns()} ({game.get_word()})')
+                        print(f'{self.team_id_to_name(other_team)}: {current_game.log()})')
+                    interval = 0
+                    counter = 0
+            time.sleep(interval)
+            if counter >= 15:
+                interval = 10
+            elif counter >= 60:
+                interval = 60
+            else:
+                interval = 300
+            counter += 1
 
     def run_game(self, game, log=True):
         """
@@ -438,7 +453,6 @@ class TraderBot:
             else:
                 interval = 300
             counter += 1
-
 
     def generate_junk_trades(self, write=True):
         """
