@@ -382,42 +382,6 @@ class TraderBot:
             return self.fill_and_submit_trade(players=players, message=message)
         return None
 
-    def run_hangman(self, log=True):
-        """
-        Runs the Hangman game through trade counters for each player. Same as run_game but specific to the Hangman game.
-
-        :param log: If True, prints game updates to the console.
-        """
-
-        with open('junktrades/trades_to_send.json') as f:
-            trades_to_send = json.load(f)
-
-        games = {team: Hangman() for team in trades_to_send.keys()}
-
-        interval = 300
-        counter = 0
-
-        while True:
-            for trade in self.get_trades():
-                if trade.was_received():
-                    other_team = trade.get_other_team()
-                    current_game = games[other_team]
-                    response = trade.get_message()
-                    prompt = current_game.action(response)
-                    self.counter_trade(trade, trades_to_send[other_team], message=prompt)
-                    if log:
-                        print(f'{self.team_id_to_name(other_team)}: {current_game.log()})')
-                    interval = 0
-                    counter = 0
-            time.sleep(interval)
-            if counter >= 15:
-                interval = 10
-            elif counter >= 60:
-                interval = 60
-            else:
-                interval = 300
-            counter += 1
-
     def run_game(self, game, log=True):
         """
         Runs a given game by reading and responding to trade notes and countering trades.
@@ -434,6 +398,11 @@ class TraderBot:
         counter = 0
 
         while True:
+            log_str = 'Checking for trades...'
+            current_time = datetime.now().time()
+            log_str += f'\tTime: {current_time.hour}:{current_time.minute}:{current_time.second}'
+            log_str += f'\tInterval: {interval}s'
+            print(log_str)
             for trade in self.get_trades():
                 if trade.was_received():
                     other_team = trade.get_other_team()
@@ -442,13 +411,13 @@ class TraderBot:
                     prompt = current_game.action(response)
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
-                        print(f'{self.team_id_to_name(other_team)}: {current_game.log()})')
+                        print(f'{self.team_id_to_name(other_team)}: {current_game.log()}')
                     interval = 0
                     counter = 0
             time.sleep(interval)
-            if counter >= 15:
+            if counter >= 5:
                 interval = 10
-            elif counter >= 60:
+            elif counter >= 20:
                 interval = 60
             else:
                 interval = 300

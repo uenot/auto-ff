@@ -26,6 +26,7 @@ class Hangman(Game):
         self.wrong_guesses_left = 6
         self.guesses = []
         self.started = False
+        self.last_input = ''
 
     def guess(self, letter):
         matching_chars = 0
@@ -94,6 +95,7 @@ class Hangman(Game):
         return message
 
     def action(self, input_str):
+        self.last_input = input_str
         if not self.started:
             return self.start()
         message = ''
@@ -102,7 +104,7 @@ class Hangman(Game):
         input_str = input_str.lower()
         self.guess(input_str)
         message += self.get_knowns()
-        message += f'\tGuesses left: {self.wrong_guesses_left} \t Previous guesses: {", ".join(self.guesses)}'
+        message += f'    Guesses left: {self.wrong_guesses_left}      Previous guesses: {", ".join(self.guesses)}'
         if self.check_victory():
             message += '\n\nYou won!'
             self.reset()
@@ -117,7 +119,9 @@ class Hangman(Game):
         return message
 
     def log(self):
-        return f'{game.get_knowns()} ({game.get_word()})'
+        log_str = f'{self.get_knowns()} ({self.get_word()})'
+        log_str += f'\nLast input: {self.last_input}\nGuesses: {", ".join(self.guesses)}'
+        return log_str
 
 
 if __name__ == '__main__':
