@@ -475,7 +475,7 @@ class TraderBot:
                     player_position = self.driver.find_element_by_xpath(position_xpath)
                 except NoSuchElementException:
                     # shouldn't happen since break would occur above if player doesn't exist
-                    pass
+                    player_position = ''
                 player_position = player_position.text.split(' - ')[-1]
 
                 if player_position == 'QB':
