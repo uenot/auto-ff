@@ -58,6 +58,12 @@ class Trade:
         self.league_id = self.url.split('/')[-3]
         self.team_id = str(team_id)
         self.driver = driver
+        # trade info attributes
+        self.my_players = []
+        self.other_players = []
+        self.teams = []
+        self.message = ''
+        self.received = None
 
     def is_active(self):
         """
@@ -75,16 +81,37 @@ class Trade:
         except TimeoutException:
             return False
 
-    def get_players_by_team(self):
+    def get_info(self):
         """
-        Gets the players involved in the trade. Separates them by team.
 
-        :return: Two lists containing each team's players involved in the trade. If trade is not active, will return
-            empty lists.
+        :return:
         """
-        my_players = []
-        other_players = []
         if self.is_active():
+            # check if was received or sent
+            try:
+                self.driver.find_element_by_link_text('Reject Trade')
+                self.received = True
+            except NoSuchElementException:
+                self.received = False
+            # get teams
+            teams = []
+            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+            anchors = soup.find_all('a', href=True)
+            for anchor in anchors:
+                anchor_test_list = anchor['href'].split('/')
+                if anchor_test_list[:-1] == ['', 'f1', self.league_id] and anchor_test_list[-1].isnumeric():
+                    teams.append(anchor['href'].split('/')[-1])
+            self.teams = list(set(teams))
+            # get message
+            message = soup.find('div', class_='tradenote')
+            if message is None:
+                message = ''
+            else:
+                message = message.find('p').text
+            self.message = message
+            # get involved players
+            my_players = []
+            other_players = []
             all_players = get_players_from_page(self.driver)
             self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/{self.team_id}')
             my_team = get_players_from_page(self.driver)
@@ -93,34 +120,8 @@ class Trade:
                     my_players.append(player)
                 else:
                     other_players.append(player)
-        return my_players, other_players
-
-    def get_players(self):
-        """
-        Gets the players involved in the trade.
-
-        :return: One list containing all players involved in the trade. If trade is not active, will return an empty
-            list.
-        """
-        my_players, other_players = self.get_players_by_team()
-        return my_players + other_players
-
-    def get_teams(self):
-        """
-        Gets the teams involved in the trade.
-
-        :return: A list of the IDs of each team involved in the trade. If trade is not active, will return an empty
-            list.
-        """
-        players = []
-        if self.is_active():
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-            anchors = soup.find_all('a', href=True)
-            for anchor in anchors:
-                anchor_test_list = anchor['href'].split('/')
-                if anchor_test_list[:-1] == ['', 'f1', self.league_id] and anchor_test_list[-1].isnumeric():
-                    players.append(anchor['href'].split('/')[-1])
-        return list(set(players))
+            self.my_players = my_players
+            self.other_players = other_players
 
     def get_other_team(self):
         """
@@ -129,49 +130,20 @@ class Trade:
         :return: The team ID in the trade that does not match your team ID (given in constructor). If trade is not
             active, returns None.
         """
-        teams = self.get_teams()
-        for team in teams:
+        for team in self.teams:
             if team != self.team_id:
                 return team
         return None
 
-    def get_message(self):
-        """
-        Gets the note accompanying the trade.
-
-        :return: A string containing the message sent with the trade. If no message was sent or the trade is not active,
-            returns an empty string.
-        """
-        if self.is_active():
-            soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-            message = soup.find('div', class_='tradenote')
-            if message is None:
-                message = ''
-            else:
-                message = message.find('p').text
-            return message
-        return ''
-
-    def was_received(self):
-        """
-        Checks if the trade was received or sent.
-
-        :return: True if the trade was received, False if the trade was sent or if the trade is not active.
-        """
-        if self.is_active():
-            try:
-                self.driver.find_element_by_link_text('Reject Trade')
-                return True
-            except NoSuchElementException:
-                return False
-        return False
+    def get_players(self):
+        return self.my_players + self.other_players
 
     def cancel(self):
         """
         Cancels the trade.
         """
-        if self.is_active():
-            if self.was_received():
+        if self.is_active() and self.received is not None:
+            if self.received:
                 cancel_btn = self.driver.find_element_by_link_text('Reject Trade')
             else:
                 cancel_btn = self.driver.find_element_by_link_text('Cancel Trade')
@@ -289,7 +261,8 @@ class TraderBot:
         while True:
             i += 1
             for trade in self.get_trades():
-                received = trade.was_received()
+                trade.get_info()
+                received = trade.received
                 if method is None or (method == 'Reject' and received) or (method == 'Cancel' and not received):
                     trade.cancel()
             time.sleep(interval)
@@ -336,7 +309,8 @@ class TraderBot:
         # find the sent trade and return it
         possible_trades = []
         for trade in self.get_trades():
-            if not trade.was_received():
+            trade.get_info()
+            if not trade.received:
                 if sorted(trade.get_players()) == sorted(players):
                     possible_trades.append(trade)
 
@@ -366,14 +340,14 @@ class TraderBot:
 
     def counter_trade(self, trade, players, message=''):
         """
-        Counters a trade
+        Counters a trade.
 
-        :param trade: The Trade to counter.
+        :param trade: The Trade to counter. Must have run get_info() to ensure trade was received.
         :param players: List of players to trade (on both teams; order doesn't matter)
         :param message: Custom message to send along with the trade.
         :return: The new trade (or None if the trade is immediately rejected).
         """
-        if trade.is_active() and trade.was_received():
+        if trade.is_active() and trade.received:
             counter_trade_button = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.LINK_TEXT, 'Make Counter Offer'))
             )
@@ -394,7 +368,7 @@ class TraderBot:
 
         games = {team: game() for team in trades_to_send.keys()}
 
-        interval = 300
+        interval = 0
         counter = 0
 
         while True:
@@ -404,20 +378,21 @@ class TraderBot:
             log_str += f'\tInterval: {interval}s'
             print(log_str)
             for trade in self.get_trades():
-                if trade.was_received():
+                trade.get_info()
+                if trade.received:
                     other_team = trade.get_other_team()
                     current_game = games[other_team]
-                    response = trade.get_message()
-                    prompt = current_game.action(response)
+                    prompt = current_game.action(trade.message)
                     self.counter_trade(trade, trades_to_send[other_team], message=prompt)
                     if log:
                         print(f'{self.team_id_to_name(other_team)}: {current_game.log()}')
-                    interval = 0
                     counter = 0
             time.sleep(interval)
-            if counter >= 5:
+            if counter < 5:
+                interval = 5
+            elif counter < 15:
                 interval = 10
-            elif counter >= 20:
+            elif counter < 60:
                 interval = 60
             else:
                 interval = 300
@@ -492,10 +467,10 @@ class TraderBot:
         self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/{self.team_id}')
         my_players = get_players_from_page(self.driver)
 
-        # gets the third to last player on the page
-        # usually the last bench slot
-        # will be different if team doesn't have a kicker or defense
-        player_to_trade_away = my_players[-3]
+        # gets the last player on the page
+        # usually the kicker (doesn't count defenses)
+        # takes last bench player (or IR) if team doesn't have a kicker
+        player_to_trade_away = my_players[-1]
         for trade in trades_to_send.values():
             trade.append(player_to_trade_away)
 
