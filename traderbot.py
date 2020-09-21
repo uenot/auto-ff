@@ -1,44 +1,24 @@
 import json
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 import time
-from bs4 import BeautifulSoup
 from datetime import datetime
-from getpass import getpass
-import requests
-from game import *
+
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+from ffbot import FFBot
+from ffbot_globals import *
 
 
-def id_to_name(player_id):
-    """
-    Finds a player's name given their Yahoo ID number.
-
-    :param player_id: A player ID number.
-    :return: The player's name.
-    """
-    soup = BeautifulSoup(requests.get(f'https://sports.yahoo.com/nfl/players/{player_id}/').text, 'html.parser')
-    return soup.find('span', class_='ys-name').text
-
-
-def get_players_from_page(driver):
-    """
-    Gets all players on the current driver page. Used for viewing the players on a team or in a trade.
-
-    :param driver: A selenium webdriver object. Players will be fetched from the driver's active page.
-    :return: A list of player IDs.
-    """
-    players = []
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    anchors = soup.find_all('a', href=True)
-    for anchor in anchors:
-        if 'https://sports.yahoo.com/nfl/players/' in anchor['href'] and 'news' not in anchor['href']:
-            players.append(anchor['href'].split('/')[-1])
-    return players
+def detect_trade(driver):
+    try:
+        WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
+        )
+        return True
+    except TimeoutException:
+        return False
 
 
 class Trade:
@@ -72,14 +52,7 @@ class Trade:
         :return: True if the trade exists, False otherwise.
         """
         self.driver.get(self.url)
-        # evaluate button exists in sent and received trades
-        try:
-            WebDriverWait(self.driver, 3).until(
-                EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
-            )
-            return True
-        except TimeoutException:
-            return False
+        return detect_trade(self.driver)
 
     def get_info(self):
         """
@@ -150,54 +123,10 @@ class Trade:
             cancel_btn.click()
 
 
-class TraderBot:
+class TraderBot(FFBot):
     """
     Contains bindings for trade actions.
     """
-
-    def __init__(self, league_id, team_id, headless=False):
-        """
-        Constructor for TraderBot. Also sets up the driver by allowing the user to log into Yahoo.
-
-        :param league_id: Your league ID.
-        :param team_id: Your team ID.
-        :param headless: Runs headless if True.
-        """
-        # initialize options
-        chrome_options = Options()
-        if headless:
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--window-size=1920x1080')
-            chrome_options.add_argument('--remote-debugging-port=9222')
-        # initialize driver
-        self.driver = webdriver.Chrome(options=chrome_options)
-        self.league_id = league_id
-        self.team_id = team_id
-        self.driver.get(f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/{self.team_id}')
-
-        if headless:
-            # have to login through command prompt if headless
-            username_field = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, 'login-username'))
-            )
-            username_field.send_keys(input('Username/Email: ') + Keys.ENTER)
-
-            password_field = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, 'login-passwd'))
-            )
-            password_field.send_keys(getpass() + Keys.ENTER)
-
-            # will sometimes ask if you want to link FB Messenger on startup
-            try:
-                skip_messenger = WebDriverWait(self.driver, 3).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="fb-messenger-linking"]/form[2]/div/a'))
-                )
-                skip_messenger.click()
-            except TimeoutException:
-                pass
-        else:
-            # if not headless, should login through window
-            input('confirm login')
 
     def get_trades(self):
         """
@@ -205,35 +134,10 @@ class TraderBot:
 
         :return: A list of Trade objects.
         """
-        trades = []
-        i = 1
-        home_url = f'https://football.fantasysports.yahoo.com/f1/{self.league_id}/{self.team_id}'
-        self.driver.get(home_url)
-        while True:
-            if self.driver.current_url != home_url:
-                self.driver.get(home_url)
-            try:
-                team_notes = WebDriverWait(self.driver, 3).until(
-                    EC.presence_of_element_located((By.XPATH, f'//*[@id="teamnotes"]/div/div[{i}]'))
-                )
-            except TimeoutException:
-                # occurs if there are no more team notes
-                # could also happen if page doesn't load: unlikely but possible
-                break
 
-            team_notes.click()
+        trades = self.get_transactions(detect_trade)
 
-            # test if teamnote is a trade through evaluate trade button
-            try:
-                WebDriverWait(self.driver, 4).until(
-                    EC.presence_of_element_located((By.LINK_TEXT, 'Evaluate Trade'))
-                )
-                trades.append(Trade(self.driver.current_url, self.team_id, self.driver))
-                i += 1
-            except TimeoutException:
-                i += 1
-                continue
-        return trades
+        return [Trade(trade, self.team_id, self.driver) for trade in trades]
 
     def team_id_to_name(self, team_id):
         """
@@ -548,12 +452,6 @@ class TraderBot:
                     if players == sorted(target[1]):
                         trade.cancel()
                         break
-
-    def shutdown(self):
-        """
-        Shuts down the driver associated with the TraderBot.
-        """
-        self.driver.quit()
 
 
 if __name__ == '__main__':
